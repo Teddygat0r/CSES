@@ -34,7 +34,6 @@ int main()
             tot++;
         }
     }
-    printvec(nums);
     string ans = "";
     int a, b;
     int d, e;
@@ -44,24 +43,43 @@ int main()
         a = min(n2[d], n2[e]);
         b = max(n2[d], n2[e]);
 
-        if (a + 1 == b)
-        {
-            if (nums[a] < nums[b])
-                tot++;
-            else
-                tot--;
+        if(nums[a] < nums[a - 1]){
+            if(nums[b] > nums[a - 1]) tot--;
         }
-        else
-        {
-            if (nums[a] > nums[b - 1] && nums[a] < nums[a - 1])
-                tot--;
-            else if (nums[a] < nums[b - 1] && nums[a] > nums[a - 1])
-                tot++;
-            if (nums[b] > nums[a - 1] && nums[b] < nums[b - 1])
-                tot--;
-            else if (nums[b] < nums[a - 1] && nums[b] > nums[b - 1])
-                tot++;
+        else if(nums[a] > nums[a - 1]){
+            if(nums[b] < nums[a - 1]) tot++;
         }
+
+        if(b != n){
+            if(nums[b] > nums[b + 1]){
+                if(nums[a] < nums[b + 1]) tot--;
+            }else if(nums[b] < nums[b + 1]){
+                if(nums[a] > nums[b + 1]) tot++;
+            }
+        }
+
+        if(a + 1 == b){
+            if(nums[a] < nums[b]){
+                tot++;
+            }else{
+                tot--;
+            }
+        }else{
+            if(nums[a] > nums[a + 1]){
+                if(nums[b] < nums[a + 1]) tot--;
+            }else if(nums[a] < nums[a + 1]){
+                if(nums[b] > nums[a + 1]) tot++;
+            }
+            if(nums[b] < nums[b - 1]){
+                if(nums[a] > nums[b - 1]) tot--;
+            }else if(nums[b] > nums[b - 1]){
+                if(nums[a] < nums[b - 1]) tot++;
+            }
+            
+
+
+        }
+
 
         t = nums[a];
         nums[a] = nums[b];
@@ -69,7 +87,6 @@ int main()
         t = n2[d];
         n2[d] = n2[e];
         n2[e] = t;
-        printvec(nums);
 
         ans += to_string(tot) + "\n";
     }
